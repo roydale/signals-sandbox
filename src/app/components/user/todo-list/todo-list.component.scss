@@ -1,0 +1,12 @@
+.card {
+  min-height: 100%;
+
+  .card-body {
+    .row:nth-child(odd) {
+      background-color: #eeeeee;
+    }
+    .row:nth-child(even) {
+      background-color: #ffffff;
+    }
+  }
+}

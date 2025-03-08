@@ -1,0 +1,21 @@
+<div class="user-list d-flex flex-column">
+  <div class="card">
+    <div class="card-header">User List</div>
+    <div class="card-body" *ngIf="users().length">
+      <div>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let user of users()"
+            (click)="onUserSelect(user)"
+          >
+            <div class="d-flex justify-content-between">
+              <span>{{ user.name }}</span>
+              <i class="bi bi-chevron-right" *ngIf="user.isSelected"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
