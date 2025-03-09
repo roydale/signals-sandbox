@@ -1,26 +1,44 @@
 @if (selectedUser().id > 0) {
 <div class="card">
-  <div class="card-header">{{ selectedUser().name }}'s Tasks</div>
+  <div class="card-header d-flex flex-column">
+    <span>{{ selectedUser().name }}'s Task(s)</span>
+    <span class="text-uppercase d-flex">
+      {{ numberOfCompleted() }}
+      <pre class="sub-text">out of</pre>
+      {{ userTasks().length }}
+      <pre class="sub-text">task(s) completed</pre>
+    </span>
+    @if(lastTaskMessage()) {
+    <pre class="text-uppercase text-warning m-0">{{ lastTaskMessage() }}</pre>
+    }
+  </div>
   <div class="card-body">
     <app-loader></app-loader>
     <div class="row p-1">
-      <div class="col-md-6 text-center fw-medium">Task</div>
+      <div class="col-md-7 text-center fw-medium">Task</div>
       <div class="col-md-2 text-center fw-medium">Done</div>
-      <div class="col-md-4 text-center fw-medium">Action</div>
+      <div class="col-md-3 text-center fw-medium">Action</div>
     </div>
     @for (task of userTasks(); track task){
     <div class="row p-1">
-      <div class="col-md-6 text-capitalize">{{ task.title }}</div>
+      <div class="col-md-7 text-capitalize">{{ task.title }}</div>
       @let isDone = task.completed ? "Yes" : "No";
       <div class="col-md-2 text-center">{{ isDone }}</div>
-      <div class="col-md-4 text-center">
-        <!--<button
-          class="btn btn-primary"
-          *ngIf="!task.completed"
-          (click)="markComplete(task)"
-        >
-          Mark as Complete
-        </button>-->
+      <div class="col-md-3 text-center">
+        <div class="d-flex justify-content-evenly">
+          @if (!task.completed) {
+          <span class="clickable" (click)="setAsDone(task)" title="Set as done">
+            <i class="bi bi-square"></i>
+          </span>
+          } @else {
+          <span>
+            <i class="bi bi-check-square text-black-50"></i>
+          </span>
+          }
+          <span class="clickable" (click)="removeTask(task)" title="Remove">
+            <i class="bi bi-trash"></i>
+          </span>
+        </div>
       </div>
     </div>
     }

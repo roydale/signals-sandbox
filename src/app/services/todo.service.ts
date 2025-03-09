@@ -30,4 +30,16 @@ export class TodoService {
         this.userTodos.set(data);
       });
   });
+
+  setToDoAsDone(task: Todo) {
+    this.userTodos.update((todos) =>
+      todos.map((todo) =>
+        todo.id === task.id ? { ...todo, completed: true } : todo
+      )
+    );
+  }
+
+  deleteTodo(task: Todo) {
+    this.userTodos.set(this.userTodos().filter((todd) => todd.id !== task.id));
+  }
 }
