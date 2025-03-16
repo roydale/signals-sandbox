@@ -12,7 +12,9 @@ export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     takeUntilDestroyed(destroyRef),
     finalize(() => {
-      loaderService.toggleLoaderDisplay(false);
+      setTimeout(() => {
+        loaderService.toggleLoaderDisplay(false);
+      }, 500);
     })
   );
 };

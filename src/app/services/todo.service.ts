@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { DestroyRef, effect, inject, Injectable, signal } from '@angular/core';
 import { Todo } from '../models/todo.model';
-import { catchError, of } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { UserService } from './user.service';
 
@@ -21,14 +21,13 @@ export class TodoService {
     this.httpClient
       .get<Array<Todo>>(`${this.baseUrl}/users/${selectedUserId}/todos`)
       .pipe(
+        tap((data) => this.userTodos.set(data)),
         takeUntilDestroyed(this.destroyRef),
         catchError((error) => {
           return of([] as Todo[]);
         })
       )
-      .subscribe((data: Todo[]) => {
-        this.userTodos.set(data);
-      });
+      .subscribe();
   });
 
   setToDoAsDone(task: Todo) {
@@ -40,6 +39,17 @@ export class TodoService {
   }
 
   deleteTodo(task: Todo) {
-    this.userTodos.set(this.userTodos().filter((todd) => todd.id !== task.id));
+    this.userTodos.set(this.userTodos().filter((todo) => todo.id !== task.id));
+  }
+
+  addTodo(task: Todo) {
+    task.id = this.getTodoId();
+    this.userTodos.update((todo) => [...todo, task]);
+  }
+
+  private getTodoId(): number {
+    const sortedUserTodos = [...this.userTodos()].sort((a, b) => b.id - a.id);
+    const lastTodoId = sortedUserTodos[0]?.id;
+    return lastTodoId + 1;
   }
 }

@@ -20,6 +20,7 @@ export class UserService {
     );
 
   readOnlyUsers = toSignal(this.users$, { initialValue: [] as User[] });
+
   selectedUser = signal<User>({
     id: 0,
     name: '',

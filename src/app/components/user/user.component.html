@@ -4,7 +4,88 @@
       <app-user-list></app-user-list>
     </div>
     <div class="todo-list">
-      <app-todo-list></app-todo-list>
+      <ul class="nav nav-pills nav-fill mb-3" id="tabMenus" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="taskListTabMenu"
+            data-bs-target="#taskListTabContent"
+            aria-controls="taskListTabContent"
+            data-bs-toggle="pill"
+            aria-selected="true"
+            type="button"
+            role="tab"
+          >
+            Task List
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="secondTabMenu"
+            data-bs-target="#secondTabContent"
+            aria-controls="secondTabContent"
+            data-bs-toggle="pill"
+            aria-selected="false"
+            type="button"
+            role="tab"
+          >
+            Second
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="thirdTabMenu"
+            data-bs-target="#thirdTabContent"
+            aria-controls="thirdTabContent"
+            data-bs-toggle="pill"
+            aria-selected="false"
+            type="button"
+            role="tab"
+          >
+            Third
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="tabContents">
+        <div
+          class="tab-pane fade show active"
+          id="taskListTabContent"
+          aria-labelledby="taskListTabMenu"
+          role="tabpanel"
+          tabindex="0"
+        >
+          <app-todo-list></app-todo-list>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="secondTabContent"
+          aria-labelledby="secondTabMenu"
+          role="tabpanel"
+          tabindex="1"
+        >
+          <div class="card">
+            <div class="d-flex justify-content-center my-5">
+              No records to show
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="thirdTabContent"
+          aria-labelledby="thirdTabMenu"
+          role="tabpanel"
+          tabindex="1"
+        >
+          <div class="card">
+            <div class="d-flex justify-content-center my-5">
+              No records to show
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

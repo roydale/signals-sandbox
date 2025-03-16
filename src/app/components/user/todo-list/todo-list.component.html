@@ -1,16 +1,29 @@
 @if (selectedUser().id > 0) {
 <div class="card">
-  <div class="card-header d-flex flex-column">
-    <span>{{ selectedUser().name }}'s Task(s)</span>
-    <span class="text-uppercase d-flex">
-      {{ numberOfCompleted() }}
-      <pre class="sub-text">out of</pre>
-      {{ userTasks().length }}
-      <pre class="sub-text">task(s) completed</pre>
-    </span>
-    @if(lastTaskMessage()) {
-    <pre class="text-uppercase text-warning m-0">{{ lastTaskMessage() }}</pre>
-    }
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-column">
+        <span>{{ selectedUser().name }}'s Task(s)</span>
+        <span class="text-uppercase d-flex">
+          <strong class="text-success">{{ numberOfCompleted() }}</strong>
+          <pre class="sub-text">out of</pre>
+          <strong>{{ userTasks().length }}</strong>
+          <pre class="sub-text">task(s) completed</pre>
+        </span>
+        @if(lastTaskMessage()) {
+        <pre class="text-uppercase text-warning m-0">{{
+          lastTaskMessage()
+        }}</pre>
+        }
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary header-button d-flex gap-1"
+        (click)="addTask()"
+      >
+        <i class="bi bi-clipboard-plus"></i>Add Task
+      </button>
+    </div>
   </div>
   <div class="card-body">
     <app-loader></app-loader>
@@ -19,7 +32,7 @@
       <div class="col-md-2 text-center fw-medium">Done</div>
       <div class="col-md-3 text-center fw-medium">Action</div>
     </div>
-    @for (task of userTasks(); track task){
+    @for (task of userTasks(); track task.id){
     <div class="row p-1">
       <div class="col-md-7 text-capitalize">{{ task.title }}</div>
       @let isDone = task.completed ? "Yes" : "No";
@@ -28,11 +41,11 @@
         <div class="d-flex justify-content-evenly">
           @if (!task.completed) {
           <span class="clickable" (click)="setAsDone(task)" title="Set as done">
-            <i class="bi bi-square"></i>
+            <i class="bi bi-circle"></i>
           </span>
           } @else {
           <span>
-            <i class="bi bi-check-square text-black-50"></i>
+            <i class="bi bi-check-circle-fill text-black-50"></i>
           </span>
           }
           <span class="clickable" (click)="removeTask(task)" title="Remove">
@@ -43,5 +56,9 @@
     </div>
     }
   </div>
+</div>
+} @else {
+<div class="card">
+  <div class="d-flex justify-content-center my-5">No records to show</div>
 </div>
 }

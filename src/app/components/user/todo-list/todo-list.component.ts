@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../../shared';
-import { TodoService, UserService } from '../../../services';
+import { FakerService, TodoService, UserService } from '../../../services';
 import { Todo } from '../../../models';
 
 @Component({
@@ -13,6 +13,7 @@ import { Todo } from '../../../models';
 export class TodoListComponent {
   private todoService = inject(TodoService);
   private userService = inject(UserService);
+  private fakerService = inject(FakerService);
 
   userTasks = this.todoService.userTodos;
   selectedUser = this.userService.selectedUser;
@@ -32,5 +33,15 @@ export class TodoListComponent {
     if (this.userTasks().length > 1) {
       this.todoService.deleteTodo(task);
     }
+  }
+
+  addTask() {
+    const newTodo: Todo = {
+      id: 0,
+      userId: this.selectedUser().id,
+      title: this.fakerService.shortLoremIpsum(),
+      completed: false,
+    };
+    this.todoService.addTodo(newTodo);
   }
 }
